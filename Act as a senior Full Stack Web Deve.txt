@@ -1,0 +1,64 @@
+Act as a senior Full Stack Web Developer.
+
+Requirement:
+Build a responsive Sound Frequency Analyzer using Next.js, TypeScript, Tailwind CSS, shadcn/ui, Chart.js, and Web Audio API. Support microphone recording, audio file upload, FFT spectrum analysis, waveform visualization, dominant frequency detection, peak frequency calculation, frequency heatmap, export to PNG, dark mode, and GitHub Pages deployment. Generate production-ready code with a professional dashboard UI.
+
+┌───────────────────────────┐
+│        User Browser       │
+├───────────────────────────┤
+│ React / Next.js           │
+│ Tailwind CSS              │
+│ Chart.js                  │
+│ Web Audio API             │
+├───────────────────────────┤
+│ FFT Analysis              │
+│ Waveform Analysis         │
+│ Frequency Detection       │
+│ Audio Recording           │
+└─────────────┬─────────────┘
+              │
+              │ Static Files
+              ▼
+┌───────────────────────────┐
+│       GitHub Pages        │
+├───────────────────────────┤
+│ index.html               │
+│ CSS                      │
+│ JavaScript Bundle        │
+│ Images                   │
+└───────────────────────────┘
+
+Use Open Spec Skill to create an enterprise-grade SDD.
+Use Matt Pocock Skill to review the design from a Senior Developer and QA perspective.
+Use impeccable Skill to Design a modern enterprise web application from a Senior UI/UX Designer. 
+
+For every design decision:
+
+1. Explain WHY the design was chosen.
+2. Identify risks.
+3. Generate development tasks.
+4. Generate unit tests.
+5. Generate integration tests.
+6. Generate UAT scenarios.
+7. Generate failure scenarios.
+8. Recommend code review checklist items.
+
+Output format:
+
+Requirement
+↓
+Solution Design
+↓
+Implementation Tasks
+↓
+Code Review Checklist
+↓
+Unit Tests
+↓
+Integration Tests
+↓
+UAT Tests
+↓
+Risk Assessment
+↓
+Deployment Checklist

@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sound Frequency Analyzer
 
-## Getting Started
+A responsive, real-time sound frequency analyzer built with Next.js, TypeScript, Tailwind CSS,
+shadcn/ui, Chart.js, and the Web Audio API. Analyze microphone input or an uploaded audio file:
+waveform, FFT spectrum, dominant/peak frequency detection, a scrolling frequency heatmap,
+PNG export, and dark mode — all client-side, deployable as static files to GitHub Pages.
 
-First, run the development server:
+See [docs/SDD.md](docs/SDD.md) for the full design document (requirements, architecture
+decisions, tests, risks, and deployment checklist).
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). Microphone capture requires a secure
+context (localhost is fine; production requires HTTPS, which GitHub Pages provides).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command | Purpose |
+|---|---|
+| `npm run dev` | Start the local dev server |
+| `npm run lint` | Run ESLint |
+| `npm test` | Run the Vitest unit/integration suite |
+| `npm run build` | Type-check and produce a static export in `out/` |
 
-## Learn More
+## Deployment (GitHub Pages)
 
-To learn more about Next.js, take a look at the following resources:
+1. Push to `main` — `.github/workflows/deploy.yml` lints, tests, builds a static export, and
+   deploys it to GitHub Pages via GitHub Actions.
+2. In the repository settings, set **Settings → Pages → Build and deployment** source to
+   **GitHub Actions**.
+3. The site's `basePath` (`/SoundSpectrum`) is derived automatically from the repo name
+   in `next.config.ts` when running under GitHub Actions; update `repoName` there if the repo
+   is renamed.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+  app/                     Next.js App Router entry (layout, page)
+  components/
+    dashboard/             Dashboard panels (controls, stats, charts, heatmap, export, theme)
+    providers/              AudioEngineProvider, ThemeProvider
+    ui/                     shadcn/ui primitives
+  hooks/                   useAnalyzerStatus, useDominantFrequency
+  lib/
+    audio/                 AudioAnalyzerEngine, FFT math utilities, shared types
+    chart-setup.ts         Chart.js registration
+    export-image.ts        PNG export helper
+docs/SDD.md                Full software design document
+```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
