@@ -34,8 +34,21 @@ context (localhost is fine; production requires HTTPS, which GitHub Pages provid
 2. In the repository settings, set **Settings → Pages → Build and deployment** source to
    **GitHub Actions**.
 3. The site's `basePath` (`/SoundSpectrum`) is derived automatically from the repo name
-   in `next.config.ts` when running under GitHub Actions; update `repoName` there if the repo
-   is renamed.
+   in `next.config.ts` when the `GH_PAGES_BUILD` env var is `"true"` (set by the Pages
+   workflow); update `repoName` there if the repo is renamed.
+
+## Deployment (Hugging Face Spaces)
+
+The app is also mirrored to the Static Space at
+[huggingface.co/spaces/andyctm79/SoundSpectrum](https://huggingface.co/spaces/andyctm79/SoundSpectrum).
+
+1. Push to `main` — `.github/workflows/deploy-hf.yml` lints, tests, builds a static export
+   (with no basePath, since the Space serves from its domain root), writes the Space's
+   required `README.md` SDK metadata, and pushes the build output straight to the Space's
+   git repo.
+2. One-time setup: create a Hugging Face [access token](https://huggingface.co/settings/tokens)
+   with write access to the Space, then add it as a repository secret named `HF_TOKEN`
+   (**Settings → Secrets and variables → Actions**).
 
 ## Project structure
 

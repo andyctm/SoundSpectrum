@@ -328,7 +328,7 @@ engine double so no real Web Audio API is required):
 | Non-secure context (plain HTTP, not localhost) blocks `getUserMedia` | Low on GitHub Pages (always HTTPS) | High if self-hosted over HTTP | Document the secure-context requirement; GitHub Pages deployment is unaffected |
 | Heatmap history lost on container resize | High (any window resize) | Low (cosmetic, expected for a live tool) | Documented trade-off (D4); acceptable for this product's scope |
 | CPU/battery drain from continuous 60fps analysis + rendering | Medium | Medium | rAF loop only runs while `listening`/`playing`; fully stopped (loop cancelled, tracks stopped) otherwise |
-| GitHub Pages `basePath` misconfiguration breaks asset loading after deploy | Low (covered by CI) | High (blank page in production) | `next.config.ts` derives `basePath` from `GITHUB_ACTIONS` env var automatically; CI builds with the same env the real deploy uses |
+| GitHub Pages `basePath` misconfiguration breaks asset loading after deploy | Low (covered by CI) | High (blank page in production) | `next.config.ts` derives `basePath` from the `GH_PAGES_BUILD` env var, set only by the Pages workflow; CI builds with the same env the real deploy uses |
 | PNG export produces a blank/broken image (Safari `foreignObject` quirks) | Low–Medium | Low | Export failures are caught and surfaced via a `sonner` toast rather than failing silently |
 | Peak-hold appears "stuck"/confusing to end users | Medium | Low | Visible reset icon directly on the stat card (D5) |
 | Memory/handle leak if a component unmounts mid-analysis | Low (guarded) | Medium | All `subscribeX` calls return unsubscribe functions invoked in effect cleanup; `AudioEngineProvider` disposes the engine on unmount |
@@ -353,3 +353,13 @@ engine double so no real Web Audio API is required):
 - [ ] Verify the Pages URL is reachable on a mobile device/browser (secure-context + responsive
       check from UAT #7/#8).
 - [ ] Tag a release / update `README.md` with the live Pages URL once verified.
+
+### Hugging Face Spaces
+
+- [x] `.github/workflows/deploy-hf.yml` added — builds (no basePath), writes the Space's
+      `sdk: static` `README.md` metadata, and pushes the output to
+      `spaces/andyctm79/SoundSpectrum` on every push to `main`.
+- [ ] One-time: create an HF access token (write scope) and add it as the `HF_TOKEN`
+      repository secret.
+- [ ] After the first successful run, open the Space and verify: assets load, microphone
+      permission prompt appears (Spaces are served over HTTPS), and dark mode works.
